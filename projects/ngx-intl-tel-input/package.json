@@ -1,5 +1,5 @@
 {
-  "name": "ngx-intl-tel-input",
+  "name": "@guestway-io/ngx-intl-tel-input",
   "version": "18.0.0",
   "peerDependencies": {
     "@angular/common": ">= 18.0.0",
