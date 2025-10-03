@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NativeElementInjectorDirective } from './directives/native-element-injector.directive';
 import { NgxIntlTelInputComponent } from './ngx-intl-tel-input.component';
+import { CountryCode } from './data/country-code';
 
 export const dropdownModuleForRoot: ModuleWithProviders<BsDropdownModule> =
   BsDropdownModule.forRoot();
@@ -14,5 +15,6 @@ export const dropdownModuleForRoot: ModuleWithProviders<BsDropdownModule> =
   declarations: [NgxIntlTelInputComponent, NativeElementInjectorDirective],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, dropdownModuleForRoot],
   exports: [NgxIntlTelInputComponent, NativeElementInjectorDirective],
+  providers: [CountryCode],
 })
 export class NgxIntlTelInputModule {}
