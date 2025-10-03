@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CountryISO } from '../enums/country-iso.enum';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CountryCode {
   public allCountries = [
     ['Afghanistan (‫افغانستان‬‎)', CountryISO.Afghanistan, '93'],

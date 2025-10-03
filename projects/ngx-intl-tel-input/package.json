@@ -1,6 +1,13 @@
 {
   "name": "@guestway-io/ngx-intl-tel-input",
-  "version": "19.0.3",
+  "version": "19.0.8",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./fesm2022/guestway-io-ngx-intl-tel-input.mjs",
+      "require": "./lib/index.js"
+    }
+  },
   "peerDependencies": {
     "@angular/common": ">= 19.0.0",
     "@angular/core": ">= 19.0.0",

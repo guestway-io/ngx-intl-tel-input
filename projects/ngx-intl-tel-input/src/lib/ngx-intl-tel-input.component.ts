@@ -30,7 +30,6 @@ import { PhoneNumberFormat } from './enums/phone-number-format.enum';
     templateUrl: './ngx-intl-tel-input.component.html',
     styleUrls: ['./bootstrap-dropdown.css', './ngx-intl-tel-input.component.css'],
     providers: [
-        CountryCode,
         {
             provide: NG_VALUE_ACCESSOR,
             // tslint:disable-next-line:no-forward-ref
