@@ -15,7 +15,7 @@
         <input
           id="country-search-box"
           [(ngModel)]="countrySearchText"
-          (keyup)="searchCountry()"
+          (ngModelChange)="searchCountry()"
           (click)="$event.stopPropagation()"
           [placeholder]="searchCountryPlaceholder"
           autofocus
@@ -24,7 +24,7 @@
       <ul class="iti__country-list" #countryList>
         <li
           class="iti__country iti__preferred"
-          *ngFor="let country of preferredCountriesInDropDown"
+          *ngFor="let country of filteredPreferredCountries"
           (click)="onCountrySelect(country, focusable)"
           [id]="country.htmlId + '-preferred'"
         >
@@ -34,10 +34,10 @@
           <span class="iti__country-name">{{ country.name }}</span>
           <span class="iti__dial-code">+{{ country.dialCode }}</span>
         </li>
-        <li class="iti__divider" *ngIf="preferredCountriesInDropDown?.length"></li>
+        <li class="iti__divider" *ngIf="filteredPreferredCountries?.length"></li>
         <li
           class="iti__country iti__standard"
-          *ngFor="let country of allCountries"
+          *ngFor="let country of filteredCountries"
           (click)="onCountrySelect(country, focusable)"
           [id]="country.htmlId"
         >
@@ -46,6 +46,12 @@
           </div>
           <span class="iti__country-name">{{ country.name }}</span>
           <span class="iti__dial-code">+{{ country.dialCode }}</span>
+        </li>
+        <li
+          class="iti__country iti__no-results"
+          *ngIf="countrySearchText && !filteredCountries.length && !filteredPreferredCountries.length"
+        >
+          <span class="iti__country-name">No countries found</span>
         </li>
       </ul>
     </div>
