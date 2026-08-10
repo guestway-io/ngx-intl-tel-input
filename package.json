@@ -16,7 +16,9 @@
     "copy-files": "npm run copy-license && npm run copy-readme",
     "npm_pack": "npm run copy-files && cd dist/ngx-intl-tel-input && npm pack",
     "package": "rimraf ./dist && npm run build_lib && npm run npm_pack",
-    "release": "rimraf ./dist && npm run build_lib && npm run copy-files && cd dist/ngx-intl-tel-input && npm publish"
+    "release:login": "npm login --auth-type=web --registry=https://registry.npmjs.org/",
+    "release:publish": "npm publish ./dist/ngx-intl-tel-input --access restricted --registry=https://registry.npmjs.org/",
+    "release": "rimraf ./dist && npm run build_lib && npm run copy-files && npm run release:login && npm run release:publish"
   },
   "private": true,
   "dependencies": {

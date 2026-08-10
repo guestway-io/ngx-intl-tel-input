@@ -3,10 +3,13 @@
   "version": "19.0.9",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
       "import": "./fesm2022/guestway-io-ngx-intl-tel-input.mjs",
       "require": "./lib/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org/"
   },
   "peerDependencies": {
     "@angular/common": ">= 19.0.0",
