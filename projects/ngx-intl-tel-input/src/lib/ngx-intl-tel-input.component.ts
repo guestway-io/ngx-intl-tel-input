@@ -415,15 +415,31 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
     const rawNumber = number['values_']['2'].toString();
     // List of all countries with countryCode (can be more than one. e.x. US, CA, DO, PR all have +1 countryCode)
     const countries = this.allCountries.filter(c => c.dialCode === countryCode.toString());
-    // Main country is the country, which has no areaCodes specified in country-code.ts file.
-    const mainCountry = countries.find(c => c.areaCodes === undefined);
+
+    // A complete number knows its own region (e.g. +7 9xx is Russia, +7 7xx is Kazakhstan).
+    const regionCode = this.phoneUtil.getRegionCodeForNumber(number);
+    const regionCountry = regionCode ? countries.find(c => c.iso2 === regionCode.toLowerCase()) : undefined;
+    if (regionCountry) {
+      return regionCountry.iso2;
+    }
+
+    // Main countries are the countries which have no areaCodes specified in country-code.ts file. When a dial code
+    // has several (e.g. +7 Russia and Kazakhstan), the lowest priority wins, not the first one alphabetically.
+    const mainCountry = countries
+      .filter(c => c.areaCodes === undefined)
+      .sort((a, b) => a.priority - b.priority)[0];
     // Secondary countries are all countries, which have areaCodes specified in country-code.ts file.
     const secondaryCountries = countries.filter(c => c.areaCodes !== undefined);
-    let matchedCountry = mainCountry ? mainCountry.iso2 : undefined;
+    // While the number is incomplete, keep the selected country when it has this dial code.
+    let matchedCountry = countries.some(c => c.iso2 === this.selectedCountry?.iso2)
+      ? this.selectedCountry.iso2
+      : mainCountry
+        ? mainCountry.iso2
+        : undefined;
 
     /*
       Iterate over each secondary country and check if nationalNumber starts with any of areaCodes available.
-      If no matches found, fallback to the main country.
+      If no matches found, fallback to the selected or main country.
     */
     secondaryCountries.forEach(country => {
       // @ts-ignore

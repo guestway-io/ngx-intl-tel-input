@@ -28,4 +28,32 @@ describe('NgxIntlTelInputComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('auto country select for a shared dial code', () => {
+    const typeNumber = (phoneNumber: string) => {
+      component.phoneNumber = phoneNumber;
+      component.onPhoneNumberChange();
+    };
+
+    it('selects Russia for a Russian +7 number', () => {
+      typeNumber('+79161234567');
+      expect(component.selectedCountry.iso2).toBe('ru');
+    });
+
+    it('selects Kazakhstan for a Kazakh +7 number', () => {
+      typeNumber('+77012345678');
+      expect(component.selectedCountry.iso2).toBe('kz');
+    });
+
+    it('selects the main country by priority while the number is incomplete', () => {
+      typeNumber('+791');
+      expect(component.selectedCountry.iso2).toBe('ru');
+    });
+
+    it('keeps the selected country with the same dial code while the number is incomplete', () => {
+      component.setSelectedCountry(component.allCountries.find(c => c.iso2 === 'kz')!);
+      typeNumber('+77');
+      expect(component.selectedCountry.iso2).toBe('kz');
+    });
+  });
 });
